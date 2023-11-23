@@ -20,7 +20,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-
+    - name: golang
+      run: |
+        pushd feeds/packages/lang
+        rm -rf golang && svn co https://github.com/openwrt/packages/tree/openwrt-23.05/lang/golang
+        popd
+        
     - name: Space cleanup and Initialization environment
       env:
           DEBIAN_FRONTEND: noninteractive
@@ -65,10 +70,7 @@ jobs:
     - name: Install feeds
       run: cd lede && ./scripts/feeds install -a
 
-    - name: golang
-      run: pushd feeds/packages/lang
-           rm -rf golang && svn co https://github.com/openwrt/packages/tree/openwrt-23.05/lang/golang
-           popd
+    
 
     - name: Load custom configuration
       run: |
