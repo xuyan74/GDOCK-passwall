@@ -68,7 +68,8 @@ jobs:
 
     - name: golang
       run: |
-        pushd ./feeds/packages/lang
+        cd lede
+        pushd feeds/packages/lang
         rm -rf golang && svn co https://github.com/openwrt/packages/tree/openwrt-23.05/lang/golang
         popd
 
