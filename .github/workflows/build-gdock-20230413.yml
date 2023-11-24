@@ -41,7 +41,7 @@ jobs:
         
     - name: Clone source code
       run: |
-        git clone https://github.com/coolsnowwolf/lede
+        git clone https://github.com/coolsnowwolf/lede lede
         
         ##修改lede目录中的feeds.conf.default文件，把第5行的 # 去掉。
         #cd lede
@@ -65,8 +65,12 @@ jobs:
 
     - name: Install feeds
       run: cd lede && ./scripts/feeds install -a
-
-   
+    
+    - name: Install feeds
+      run: pushd feeds/packages/lang
+           rm -rf golang && svn co https://github.com/openwrt/packages/branches/openwrt-23.05/lang/golang
+           popd
+            
     - name: Load custom configuration
       run: |
         cp -f jdy20230416.config ./lede/.config
