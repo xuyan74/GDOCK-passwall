@@ -67,8 +67,12 @@ jobs:
       run: cd lede && ./scripts/feeds install -a
     
     - name: Install feeds
-      run: pushd feeds/packages/lang
-           rm -rf golang && svn co https://github.com/openwrt/packages/branches/openwrt-23.05/lang/golang
+      run: |
+           pushd feeds/packages/lang
+           ls
+           rm -rf golang
+           ls
+           svn co https://github.com/openwrt/packages/branches/openwrt-23.05/lang/golang
            popd
             
     - name: Load custom configuration
