@@ -63,13 +63,7 @@ jobs:
     - name: Install feeds
       run: cd lede && ./scripts/feeds install -a
     
-    - name: Install feeds
-      run: |
-           cd lede
-           pushd feeds/packages/lang
-           rm -rf golang
-           svn co https://github.com/openwrt/packages/branches/openwrt-23.05/lang/golang
-           popd
+    
             
     - name: Load custom configuration
       run: |
@@ -83,7 +77,14 @@ jobs:
       run: |
         echo -e "$(nproc) thread build."
         cd lede && make download -j8
-       
+   
+    - name: Install feeds
+      run: |
+           cd lede
+           pushd feeds/packages/lang
+           rm -rf golang
+           svn co https://github.com/openwrt/packages/branches/openwrt-23.05/lang/golang
+           popd  
    
     - name: Build
       run: |
