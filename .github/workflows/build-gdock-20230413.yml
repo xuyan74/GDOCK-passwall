@@ -90,7 +90,7 @@ jobs:
       run: |
         cd lede
         echo -e "$(nproc) thread build."
-        PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin make -j1 V=s
+        make -j$(nproc) V=s
         
  
  
