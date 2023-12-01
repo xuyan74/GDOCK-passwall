@@ -61,6 +61,7 @@ jobs:
 
     - name: Update feeds
       run: |
+          cd lede
           pushd feeds/packages/lang
           rm -rf golang
           svn co https://github.com/openwrt/packages/branches/openwrt-23.05/lang/golang
