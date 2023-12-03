@@ -1,5 +1,5 @@
 #=================================================
-#   Description: Build G-DOCK FROM LEAN'S LEDE
+#   Description: Build G-DOCK FROM openwrt
 #   Author: JK
 #=================================================
 
@@ -38,18 +38,16 @@ jobs:
         
     - name: Clone source code
       run: |
-        git clone https://github.com/coolsnowwolf/lede lede
+        git clone https://github.com/openwrt/openwrt openwrt
         
-        ##修改lede目录中的feeds.conf.default文件，把第5行的 # 去掉。
-        #cd lede
-       # sed -i '5s/#//' feeds.conf.default
+     
        
   ##***************************************************************************  
   
   ##下载kenzok8/openwrt-packages的源代码 和 passwall依赖库kenzok8/small.git。
     - name: Clone openwrt-packages code and small code
       run: |
-        cd lede
+        cd openwrt
         sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
         sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
     
@@ -58,37 +56,31 @@ jobs:
    
    
     - name: Update feeds
-      run: cd lede && ./scripts/feeds update -a
+      run: cd openwrt && ./scripts/feeds update -a
 
     - name: Install feeds
-      run: cd lede && ./scripts/feeds install -a
+      run: cd openwrt && ./scripts/feeds install -a
     
     
             
     - name: Load custom configuration
       run: |
-        cp -f jdy20230416.config ./lede/.config
+        cp -f jdy20230416.config ./openwrt/.config
         chmod +x diy.sh
-        cd lede
+        cd openwrt
         ../diy.sh
         make defconfig
     
     - name: Download package
       run: |
         echo -e "$(nproc) thread build."
-        cd lede && make download -j8
+        cd openwrt && make download -j8
    
-    - name: Install feeds
-      run: |
-           cd lede
-           pushd feeds/packages/lang
-           rm -rf golang
-           svn co https://github.com/openwrt/packages/branches/openwrt-23.05/lang/golang
-           popd  
+    
    
     - name: Build
       run: |
-        cd lede
+        cd openwrt
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
         
@@ -97,14 +89,14 @@ jobs:
  ######把上面生成的.config文件拷贝到bin/targets/ipq40xx/generic/my.config，从而在下载固件时，一起下载回来。   
     - name: Copy .config  to  ./bin/targets/ipq40xx/generic/my.config
       run: |
-        cd lede
+        cd openwrt
         cp  .config   ./bin/targets/ipq40xx/generic/my.config  
    
     - name : Upload artifact
       uses: actions/upload-artifact@master
       with: 
         name: JDY-20230416
-        path: ./lede/bin
+        path: ./openwrt/bin
 
 
 
