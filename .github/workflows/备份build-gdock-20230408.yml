@@ -69,7 +69,12 @@ jobs:
     - name: Install feeds
       run: cd lede && ./scripts/feeds install -a
 
-   
+    - name: Download package
+      run: |
+        pushd package/lean
+        git clone https://github.com/xuyan74/lua-maxminddb.git
+        git clone https://github.com/xuyan74/luci-app-vssr.git
+        popd
           
     - name: Load custom configuration
       run: |
