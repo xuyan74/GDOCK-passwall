@@ -71,7 +71,7 @@ jobs:
 
     - name: Download package
       run: |
-        pushd lede/feeds/small
+        pushd lede/package/lean
         git clone https://github.com/xuyan74/lua-maxminddb.git
         git clone https://github.com/xuyan74/luci-app-vssr.git
         popd
