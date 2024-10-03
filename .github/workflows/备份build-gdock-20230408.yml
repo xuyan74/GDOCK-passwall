@@ -73,7 +73,7 @@ jobs:
           
     - name: Load custom configuration
       run: |
-        cp -f jdy20230408.config ./lede/.config
+        cp -f jdy20241003.config ./lede/.config
         chmod +x diy.sh
         cd lede
         ../diy.sh
