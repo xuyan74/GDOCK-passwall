@@ -41,8 +41,8 @@ jobs:
         
     - name: Clone source code
       run: |
-        git clone https://github.com/coolsnowwolf/lede lede
-        
+        #git clone https://github.com/coolsnowwolf/lede lede
+        git clone https://github.com/openwrt/openwrt lede
         ##修改lede目录中的feeds.conf.default文件，把第5行的 # 去掉。
         #cd lede
        # sed -i '5s/#//' feeds.conf.default
